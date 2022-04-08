@@ -54,4 +54,6 @@ dependencies {
     implementation(AndroidX.compose.runtime.liveData)
 
     implementation(AndroidX.navigation.compose)
+
+    implementation("com.github.skydoves:landscapist-coil:_")
 }
