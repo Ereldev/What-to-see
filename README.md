@@ -7,7 +7,7 @@ This app is realized with KMM framework, Compose for Android views & SwiftUI for
   
 # Project architecture
 
-The project dependencies are maintained with [refreshVersions][https://jmfayard.github.io/refreshVersions/] gradle plugin.  
+The project dependencies are maintained with [refreshVersions](https://jmfayard.github.io/refreshVersions/] gradle plugin)  
 
 TODO: schematic
 
@@ -30,7 +30,7 @@ TODO: schematic
 - [ ] Screen: Splash screen with lotite animation 
 
 ## iOS
-
+    
 - [ ] Android like implementation
 
 ## Global
