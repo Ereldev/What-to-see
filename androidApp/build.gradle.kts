@@ -56,4 +56,9 @@ dependencies {
     implementation(AndroidX.navigation.compose)
 
     implementation("com.github.skydoves:landscapist-coil:_")
+
+    implementation("io.insert-koin:koin-android:_")
+    implementation("io.insert-koin:koin-androidx-navigation:_")
+    implementation("io.insert-koin:koin-androidx-compose:_")
+
 }

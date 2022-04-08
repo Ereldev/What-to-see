@@ -3,6 +3,7 @@
     package="com.ereldev.whattosee.android">
 
     <application
+        android:name=".What2SeeApplication"
         android:allowBackup="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">

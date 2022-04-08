@@ -44,6 +44,7 @@ fun PosterImage(
         description = description,
         placeHolder = placeHolder,
         modifier = modifier
+            .shadow(2.dp, shape = RoundedCornerShape(corner = CornerSize(5.dp)))
     )
 }
 

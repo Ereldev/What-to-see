@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.ereldev.whattosee.android.category.CATEGORIES_SCREEN
-import com.ereldev.whattosee.android.category.CategoriesScreen
+import com.ereldev.whattosee.android.category.CategoriesScreenVM
 import com.ereldev.whattosee.android.detail.DETAIL_SCREEN
 import com.ereldev.whattosee.android.detail.DetailScreen
 import com.ereldev.whattosee.modelui.ShowUI
@@ -18,7 +18,7 @@ fun MainNavHost(navController: NavHostController) {
         startDestination = CATEGORIES_SCREEN
     ) {
         composable(CATEGORIES_SCREEN) {
-            CategoriesScreen { onCreateCategoryClick(navController) }
+            CategoriesScreenVM { onCreateCategoryClick(navController) }
         }
         composable(DETAIL_SCREEN) {
             DetailScreen(
