@@ -38,6 +38,12 @@ android {
     }
 }
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+    }
+}
+
 dependencies {
     implementation(project(":shared"))
 

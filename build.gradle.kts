@@ -6,6 +6,7 @@ buildscript {
     }
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:_")
+        classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:_")
         classpath(Android.tools.build.gradlePlugin)
     }
 }

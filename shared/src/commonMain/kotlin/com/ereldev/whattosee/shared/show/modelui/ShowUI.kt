@@ -1,4 +1,4 @@
-package com.ereldev.whattosee.modelui
+package com.ereldev.whattosee.shared.show.modelui
 
 data class ShowUI(
     val title: String,

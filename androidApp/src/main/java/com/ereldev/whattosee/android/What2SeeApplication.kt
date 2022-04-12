@@ -2,6 +2,7 @@ package com.ereldev.whattosee.android
 
 import android.app.Application
 import com.ereldev.whattosee.android.category.categoryModule
+import com.ereldev.whattosee.android.show.showModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -16,7 +17,8 @@ class What2SeeApplication: Application() {
             androidLogger(Level.ERROR)
             androidContext(this@What2SeeApplication)
             modules(
-                categoryModule
+                categoryModule,
+                showModule
             )
         }
     }
