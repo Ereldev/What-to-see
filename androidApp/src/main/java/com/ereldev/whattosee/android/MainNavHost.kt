@@ -1,5 +1,6 @@
 package com.ereldev.whattosee.android
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -10,7 +11,9 @@ import com.ereldev.whattosee.android.category.CategoriesScreenVM
 import com.ereldev.whattosee.android.detail.DETAIL_SCREEN
 import com.ereldev.whattosee.android.detail.DetailScreen
 import com.ereldev.whattosee.modelui.ShowUI
+import com.ereldev.whattosee.shared.category.modelui.CategoryModelUI
 
+@ExperimentalMaterialApi
 @Composable
 fun MainNavHost(navController: NavHostController) {
     NavHost(
@@ -18,7 +21,10 @@ fun MainNavHost(navController: NavHostController) {
         startDestination = CATEGORIES_SCREEN
     ) {
         composable(CATEGORIES_SCREEN) {
-            CategoriesScreenVM { onCreateCategoryClick(navController) }
+            CategoriesScreenVM(
+                onCategoryClick = { onCategoryClick(it) },
+                onCreateCategoryClick = { onCreateCategoryClick(navController) }
+            )
         }
         composable(DETAIL_SCREEN) {
             DetailScreen(
@@ -30,6 +36,10 @@ fun MainNavHost(navController: NavHostController) {
             )
         }
     }
+}
+
+private fun onCategoryClick(categoryModelUI: CategoryModelUI) {
+
 }
 
 private fun onCreateCategoryClick(navController: NavController) {

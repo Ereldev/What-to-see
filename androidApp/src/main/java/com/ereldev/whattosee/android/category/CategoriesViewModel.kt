@@ -1,6 +1,5 @@
 package com.ereldev.whattosee.android.category
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ereldev.whattosee.android.common.AbstractViewModel
 import com.ereldev.whattosee.shared.category.GetCategoriesUseCase

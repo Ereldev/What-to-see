@@ -1,25 +1,27 @@
 package com.ereldev.whattosee.android.category
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.FabPosition
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.ereldev.whattosee.android.R
 import com.ereldev.whattosee.android.component.MainTopAppBar
+import com.ereldev.whattosee.shared.category.factory.CategoryFactory
 import com.ereldev.whattosee.shared.category.modelui.CategoryModelUI
 import org.koin.androidx.compose.viewModel
 
 const val CATEGORIES_SCREEN = "categories_screen"
 
+@ExperimentalMaterialApi
 @Composable
 fun CategoriesScreenVM(
+    onCategoryClick: (categoryModelUI: CategoryModelUI) -> Unit,
     onCreateCategoryClick: () -> Unit
 ) {
     val viewModel by viewModel<CategoriesViewModel>()
@@ -28,13 +30,16 @@ fun CategoriesScreenVM(
 
     CategoriesScreen(
         categories = categories,
+        onCategoryClick= onCategoryClick,
         onCreateCategoryClick = onCreateCategoryClick
     )
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun CategoriesScreen(
     categories: List<CategoryModelUI>,
+    onCategoryClick: (categoryModelUI: CategoryModelUI) -> Unit,
     onCreateCategoryClick: () -> Unit
 ) {
     Scaffold(
@@ -46,20 +51,28 @@ fun CategoriesScreen(
             }
         }
     ) {
-        LazyColumn {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             items(categories) { category ->
-                Text(text = category.name)
+                CategoryListItem(category) {
+                    onCategoryClick(category)
+                }
             }
         }
     }
 }
 
+@ExperimentalMaterialApi
 @Preview(showSystemUi = true)
 @Composable
 fun CategoriesScreenPreview() {
     CategoriesScreen(
-        categories = listOf()
-    ) {
-        // Do nothing
-    }
+        categories = listOf(
+            CategoryFactory.getCategory(),
+            CategoryFactory.getCategory()
+        ),
+        onCategoryClick = {},
+        onCreateCategoryClick = {}
+    )
 }
