@@ -15,13 +15,14 @@ TODO: schematic
 
 ## Shared
 
-- [ ] REST Client
-- [ ] API services & repositories
-- [ ] Local saving ?
+- [X] REST Client
+- [X] API services & repositories for movies
+- [ ] API services & repositories for credits
+- [ ] Local saving for categories
 
 ## Android
 
-- [ ] App navigation
+- [X] App navigation
 - [ ] Screen: Categories list
 - [ ] Screen: Create & edit categories
 - [ ] Screen: Movies & Shows list for a category
@@ -36,10 +37,10 @@ TODO: schematic
 ## Global
 
 - [x] Manage dependencies with refreshVersions plugin
-- [ ] ModelUI module shared between Android & iOS
 - [ ] Use github board for tasks listing
 - [ ] Sonar
 
 ## Ideas 
 
+- [ ] Move to TheMovieDB V4 API
 - [ ] Notifications (backend required ?)

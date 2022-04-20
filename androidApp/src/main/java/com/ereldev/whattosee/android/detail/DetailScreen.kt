@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ereldev.whattosee.android.R
 import com.ereldev.whattosee.android.component.*
-import com.ereldev.whattosee.shared.show.modelui.ShowUI
+import com.ereldev.whattosee.shared.show.model.ShowUI
 
 const val DETAIL_SCREEN = "detail_screen"
 
@@ -72,7 +72,7 @@ fun DetailScreen(
             Modifier.verticalScroll(scrollState)
         ) {
             TextTitle2(text = stringResource(R.string.synopsis))
-            Text(text = showUI.synopsis, modifier = Modifier.padding(8.dp))
+            Text(text = showUI.overview, modifier = Modifier.padding(8.dp))
 
             TextTitle2(text = stringResource(R.string.cast))
 

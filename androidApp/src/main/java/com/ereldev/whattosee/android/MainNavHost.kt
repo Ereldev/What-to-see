@@ -12,7 +12,7 @@ import com.ereldev.whattosee.android.detail.DETAIL_SCREEN
 import com.ereldev.whattosee.android.detail.DetailScreen
 import com.ereldev.whattosee.android.show.SHOWS_SCREEN
 import com.ereldev.whattosee.android.show.ShowsScreenVM
-import com.ereldev.whattosee.shared.show.modelui.ShowUI
+import com.ereldev.whattosee.shared.show.model.ShowUI
 import com.ereldev.whattosee.shared.category.modelui.CategoryModelUI
 
 @ExperimentalMaterialApi
