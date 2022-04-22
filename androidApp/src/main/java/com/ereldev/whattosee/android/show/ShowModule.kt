@@ -9,7 +9,7 @@ import com.ereldev.whattosee.shared.show.mapper.TVShowToToShowMapper
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val showsModule = module {
+val showModule = module {
 
     viewModel { ShowsViewModel(get()) }
 

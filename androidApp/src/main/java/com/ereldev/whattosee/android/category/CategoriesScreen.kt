@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.ereldev.whattosee.android.R
 import com.ereldev.whattosee.android.component.MainTopAppBar
 import com.ereldev.whattosee.shared.category.factory.CategoryFactory
-import com.ereldev.whattosee.shared.category.modelui.CategoryModelUI
+import com.ereldev.whattosee.shared.category.model.CategoryUI
 import org.koin.androidx.compose.viewModel
 
 const val CATEGORIES_SCREEN = "categories_screen"
@@ -21,7 +21,7 @@ const val CATEGORIES_SCREEN = "categories_screen"
 @ExperimentalMaterialApi
 @Composable
 fun CategoriesScreenVM(
-    onCategoryClick: (categoryModelUI: CategoryModelUI) -> Unit,
+    onCategoryClick: (categoryUI: CategoryUI) -> Unit,
     onCreateCategoryClick: () -> Unit
 ) {
     val viewModel by viewModel<CategoriesViewModel>()
@@ -38,8 +38,8 @@ fun CategoriesScreenVM(
 @ExperimentalMaterialApi
 @Composable
 fun CategoriesScreen(
-    categories: List<CategoryModelUI>,
-    onCategoryClick: (categoryModelUI: CategoryModelUI) -> Unit,
+    categories: List<CategoryUI>,
+    onCategoryClick: (categoryUI: CategoryUI) -> Unit,
     onCreateCategoryClick: () -> Unit
 ) {
     Scaffold(

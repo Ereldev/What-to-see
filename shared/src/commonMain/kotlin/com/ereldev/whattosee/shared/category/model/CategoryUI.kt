@@ -1,6 +1,6 @@
-package com.ereldev.whattosee.shared.category.modelui
+package com.ereldev.whattosee.shared.category.model
 
-data class CategoryModelUI(
+data class CategoryUI(
     val name: String,
     val tags: List<CategoryTagUI>
 )

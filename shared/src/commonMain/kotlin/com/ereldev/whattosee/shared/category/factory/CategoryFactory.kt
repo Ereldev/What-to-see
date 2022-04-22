@@ -1,13 +1,13 @@
 package com.ereldev.whattosee.shared.category.factory
 
-import com.ereldev.whattosee.shared.category.modelui.CategoryModelUI
-import com.ereldev.whattosee.shared.category.modelui.CategoryTagUI
+import com.ereldev.whattosee.shared.category.model.CategoryTagUI
+import com.ereldev.whattosee.shared.category.model.CategoryUI
 
 class CategoryFactory {
 
     companion object {
 
-        fun getCategory() = CategoryModelUI(
+        fun getCategory() = CategoryUI(
             "Category name",
             listOf(
                 CategoryTagUI("1", "Tag name 1"),

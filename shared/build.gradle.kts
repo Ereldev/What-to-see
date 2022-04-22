@@ -5,6 +5,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization") version "1.6.10"
     id("com.codingfeline.buildkonfig")
+    id("com.squareup.sqldelight")
     id("com.android.library")
 }
 
@@ -39,6 +40,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-android:_")
+                implementation("com.squareup.sqldelight:android-driver:_")
             }
         }
         val androidTest by getting
@@ -53,6 +55,7 @@ kotlin {
 
             dependencies {
                 implementation("io.ktor:ktor-client-ios:_")
+                implementation("com.squareup.sqldelight:native-driver:_")
             }
         }
         val iosX64Test by getting
@@ -73,6 +76,13 @@ buildkonfig {
     defaultConfigs {
         val themoviedbApiKey: String = gradleLocalProperties(rootDir).getProperty("themoviedbApiKey")
         buildConfigField(STRING, "themoviedbApiKey", themoviedbApiKey)
+    }
+}
+
+sqldelight {
+    database("WHat2SeeDatabase") {
+        packageName = "com.ereldev.whattosee.db"
+        sourceFolders = listOf("sqldelight")
     }
 }
 
