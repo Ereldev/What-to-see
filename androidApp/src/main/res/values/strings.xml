@@ -8,4 +8,11 @@
     <string name="cast">Cast</string>
     <string name="unable_to_get_cast">Unable to get cast</string>
 
+    <string name="edit_category_title">Edit category</string>
+    <string name="create_category_title">Create category</string>
+    <string name="category_name">Category name:</string>
+    <string name="category_name_label">Name</string>
+    <string name="category_keywords">Category keywords:</string>
+    <string name="category_keywords_label">Search keywords (ex: action, adventure, horror, …)</string>
+
 </resources>

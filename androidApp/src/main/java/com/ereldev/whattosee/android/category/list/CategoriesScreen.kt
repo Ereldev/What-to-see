@@ -1,4 +1,4 @@
-package com.ereldev.whattosee.android.category
+package com.ereldev.whattosee.android.category.list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ereldev.whattosee.android.R
 import com.ereldev.whattosee.android.component.MainTopAppBar
+import com.ereldev.whattosee.android.component.SettingsIconButton
 import com.ereldev.whattosee.shared.category.factory.CategoryFactory
 import com.ereldev.whattosee.shared.category.model.CategoryUI
 import org.koin.androidx.compose.viewModel
@@ -22,7 +23,7 @@ const val CATEGORIES_SCREEN = "categories_screen"
 @Composable
 fun CategoriesScreenVM(
     onCategoryClick: (categoryUI: CategoryUI) -> Unit,
-    onCreateCategoryClick: () -> Unit
+    onEditCategoryClick: (categoryUI: CategoryUI?) -> Unit
 ) {
     val viewModel by viewModel<CategoriesViewModel>()
 
@@ -31,7 +32,7 @@ fun CategoriesScreenVM(
     CategoriesScreen(
         categories = categories,
         onCategoryClick= onCategoryClick,
-        onCreateCategoryClick = onCreateCategoryClick
+        onEditCategoryClick = onEditCategoryClick
     )
 }
 
@@ -40,13 +41,18 @@ fun CategoriesScreenVM(
 fun CategoriesScreen(
     categories: List<CategoryUI>,
     onCategoryClick: (categoryUI: CategoryUI) -> Unit,
-    onCreateCategoryClick: () -> Unit
+    onEditCategoryClick: (categoryUI: CategoryUI?) -> Unit
 ) {
     Scaffold(
-        topBar = { MainTopAppBar(title = stringResource(R.string.app_name)) },
+        topBar = {
+            MainTopAppBar(
+                title = stringResource(R.string.app_name),
+                actions = { SettingsIconButton() }
+            )
+        },
         floatingActionButtonPosition = FabPosition.End,
         floatingActionButton = {
-            FloatingActionButton(onClick = { onCreateCategoryClick() }) {
+            FloatingActionButton(onClick = { onEditCategoryClick(null) }) {
                 Text("+")
             }
         }
@@ -73,6 +79,6 @@ fun CategoriesScreenPreview() {
             CategoryFactory.getCategory()
         ),
         onCategoryClick = {},
-        onCreateCategoryClick = {}
+        onEditCategoryClick = {}
     )
 }

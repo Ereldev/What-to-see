@@ -6,8 +6,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.ereldev.whattosee.android.category.CATEGORIES_SCREEN
-import com.ereldev.whattosee.android.category.CategoriesScreenVM
+import com.ereldev.whattosee.android.category.edit.CATEGORY_EDIT_SCREEN
+import com.ereldev.whattosee.android.category.edit.CategoryEditScreenVM
+import com.ereldev.whattosee.android.category.list.CATEGORIES_SCREEN
+import com.ereldev.whattosee.android.category.list.CategoriesScreenVM
 import com.ereldev.whattosee.android.detail.DETAIL_SCREEN
 import com.ereldev.whattosee.android.detail.DetailScreen
 import com.ereldev.whattosee.android.show.SHOWS_SCREEN
@@ -25,8 +27,11 @@ fun MainNavHost(navController: NavHostController) {
         composable(CATEGORIES_SCREEN) {
             CategoriesScreenVM(
                 onCategoryClick = { onCategoryClick(navController, it) },
-                onCreateCategoryClick = { onCreateCategoryClick(navController) }
+                onEditCategoryClick = { onEditCategoryClick(navController, it) }
             )
+        }
+        composable(CATEGORY_EDIT_SCREEN) {
+            CreateEditCategoryScreen(navController)
         }
         composable(SHOWS_SCREEN) {
             ShowsScreenVM()
@@ -43,6 +48,23 @@ fun MainNavHost(navController: NavHostController) {
     }
 }
 
+@Composable
+private fun CreateEditCategoryScreen(navController: NavHostController) {
+    /*navController.previousBackStackEntry?.arguments?.getParcelable<CategoryUI>(
+        DETAIL_SCREEN_ARG_SHOW
+    ).let {
+        CategoryEditScreenVM(it) { onBackPressed(navController) }
+    }*/
+    CategoryEditScreenVM(null) { onBackPressed(navController) }
+}
+
+private fun onEditCategoryClick(
+    navController: NavController,
+    categoryUI: CategoryUI?
+) {
+    navController.navigate(CATEGORY_EDIT_SCREEN)
+}
+
 private fun onCategoryClick(
     navController: NavController,
     categoryUI: CategoryUI
@@ -50,6 +72,6 @@ private fun onCategoryClick(
     navController.navigate(SHOWS_SCREEN)
 }
 
-private fun onCreateCategoryClick(navController: NavController) {
-    navController.navigate(DETAIL_SCREEN)
+private fun onBackPressed(navController: NavController) {
+    navController.navigateUp()
 }

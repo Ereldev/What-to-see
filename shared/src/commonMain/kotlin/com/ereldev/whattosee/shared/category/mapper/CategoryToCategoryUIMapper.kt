@@ -1,4 +1,4 @@
-package com.ereldev.whattosee.shared.category
+package com.ereldev.whattosee.shared.category.mapper
 
 import com.ereldev.whattosee.db.Category
 import com.ereldev.whattosee.shared.category.model.CategoryUI

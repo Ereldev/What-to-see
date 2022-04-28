@@ -1,4 +1,4 @@
-package com.ereldev.whattosee.android.category
+package com.ereldev.whattosee.android.category.list
 
 import androidx.lifecycle.MutableLiveData
 import com.ereldev.whattosee.android.common.AbstractViewModel

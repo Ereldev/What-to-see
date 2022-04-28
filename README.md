@@ -23,12 +23,21 @@ TODO: schematic
 ## Android
 
 - [X] App navigation
-- [ ] Screen: Categories list
-- [ ] Screen: Create & edit categories
-- [ ] Screen: Movies & Shows list for a category
-- [ ] Screen: Movies & Shows details
-- [ ] Screen: Settings (no spoil mode)
-- [ ] Screen: Splash screen with lotite animation 
+- [ ] Categories list
+  - [ ] Empty state
+- [ ] Create & edit category
+  - [ ] Display search results
+  - [ ] Search query after 2 char & 500 ms
+  - [ ] Empty state for search
+  - [ ] Error state for search
+  - [ ] Implement paging
+- [ ] Movies & Shows list for a category
+  - [ ] Display results
+  - [ ] Empty state
+  - [ ] Error state with retry
+- [ ] Movies & Shows details
+- [ ] Settings (no spoil mode)
+- [ ] Splash screen with lotite animation 
 
 ## iOS
     
@@ -37,8 +46,6 @@ TODO: schematic
 ## Global
 
 - [x] Manage dependencies with refreshVersions plugin
-- [ ] Use github board for tasks listing
-- [ ] Sonar
 
 ## Ideas 
 
