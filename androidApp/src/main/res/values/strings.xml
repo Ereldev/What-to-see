@@ -3,10 +3,7 @@
 
     <string name="app_name">What to see ?</string>
 
-    <string name="release_date">Release date: %s</string>
-    <string name="synopsis">Synopsis</string>
-    <string name="cast">Cast</string>
-    <string name="unable_to_get_cast">Unable to get cast</string>
+    <string name="categories_empty_state">You don\'t have any category yet !\n press the + button to create your first category !</string>
 
     <string name="edit_category_title">Edit category</string>
     <string name="create_category_title">Create category</string>
@@ -14,5 +11,10 @@
     <string name="category_name_label">Name</string>
     <string name="category_keywords">Category keywords:</string>
     <string name="category_keywords_label">Search keywords (ex: action, adventure, horror, …)</string>
+
+    <string name="release_date">Release date: %s</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="cast">Cast</string>
+    <string name="unable_to_get_cast">Unable to get cast</string>
 
 </resources>

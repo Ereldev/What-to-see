@@ -24,7 +24,7 @@ TODO: schematic
 
 - [X] App navigation
 - [ ] Categories list
-  - [ ] Empty state
+  - [X] Empty state
 - [ ] Create & edit category
   - [ ] Display search results
   - [ ] Search query after 2 char & 500 ms
