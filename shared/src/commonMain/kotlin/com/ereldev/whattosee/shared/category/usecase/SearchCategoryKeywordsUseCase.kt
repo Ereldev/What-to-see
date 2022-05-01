@@ -1,5 +1,6 @@
-package com.ereldev.whattosee.shared.category
+package com.ereldev.whattosee.shared.category.usecase
 
+import com.ereldev.whattosee.shared.category.CategoryRepository
 import com.ereldev.whattosee.shared.category.model.CategoryKeywordUI
 
 class SearchCategoryKeywordsUseCase(

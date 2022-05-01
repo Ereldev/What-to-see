@@ -22,25 +22,28 @@ TODO: schematic
 
 ## Android
 
-- [X] App navigation
+- [] App navigation
 - [ ] Categories list
-  - [X] Empty state
+  - [x] Empty state
 - [ ] Create & edit category
-  - [ ] Display search results
-  - [ ] Search query after 2 char & 500 ms
+  - [x] Display search results
+  - [x] Search query after 500 ms
   - [ ] Empty state for search
-  - [ ] Error state for search
+  - [ ] Error state with retry for search
   - [ ] Implement paging
+  - [ ] Implement save / update
 - [ ] Movies & Shows list for a category
   - [ ] Display results
   - [ ] Empty state
   - [ ] Error state with retry
 - [ ] Movies & Shows details
+  - [ ] Dynamic show data
+  - [ ] Cast
 - [ ] Settings (no spoil mode)
 - [ ] Splash screen with lotite animation 
 
 ## iOS
-    
+
 - [ ] Android like implementation
 
 ## Global

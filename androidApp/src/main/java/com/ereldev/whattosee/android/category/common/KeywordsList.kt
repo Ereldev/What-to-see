@@ -1,7 +1,9 @@
 package com.ereldev.whattosee.android.category.common
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -19,22 +21,30 @@ import com.ereldev.whattosee.shared.category.model.CategoryKeywordUI
 @Composable
 fun KeywordsList(
     keywords: List<CategoryKeywordUI>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onRemove: ((CategoryKeywordUI) -> Unit)? = null
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier
     ) {
         items(keywords) { keyword ->
-            Text(
-                text = keyword.name,
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier
                     .background(
                         color = Color.LightGray,
                         shape = RoundedCornerShape(corner = CornerSize(8.dp))
                     )
                     .padding(start = 4.dp, end = 4.dp)
-            )
+                    .clickable { onRemove?.invoke(keyword) }
+            ) {
+                Text(text = keyword.name)
+
+                onRemove?.let {
+                    Text(text = "X")
+                }
+            }
         }
     }
 }
@@ -45,4 +55,12 @@ fun KeywordsListPreview() {
     KeywordsList(
         CategoryFactory.getCategory().keywords
     )
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun KeywordsListWithRemovePreview() {
+    KeywordsList(
+        CategoryFactory.getCategory().keywords
+    ) {}
 }

@@ -48,6 +48,7 @@ fun MainNavHost(navController: NavHostController) {
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 private fun CreateEditCategoryScreen(navController: NavHostController) {
     /*navController.previousBackStackEntry?.arguments?.getParcelable<CategoryUI>(

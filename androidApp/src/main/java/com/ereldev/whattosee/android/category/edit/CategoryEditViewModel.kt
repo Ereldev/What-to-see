@@ -1,12 +1,19 @@
 package com.ereldev.whattosee.android.category.edit
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.ereldev.whattosee.android.common.AbstractViewModel
-import com.ereldev.whattosee.shared.category.SearchCategoryKeywordsUseCase
+import com.ereldev.whattosee.shared.category.model.CategoryKeywordUI
 import com.ereldev.whattosee.shared.category.model.CategoryUI
+import com.ereldev.whattosee.shared.category.usecase.EditCategoryUseCases
+import com.ereldev.whattosee.shared.category.usecase.SearchCategoryKeywordsUseCase
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class CategoryEditViewModel(
     initialCategoryUI: CategoryUI?,
+    private val editCategoryUseCases: EditCategoryUseCases,
     private val searchCategoryKeywordsUseCase: SearchCategoryKeywordsUseCase
 ): AbstractViewModel() {
 
@@ -17,6 +24,12 @@ class CategoryEditViewModel(
     val currentSearch: MutableLiveData<String> by lazy {
         MutableLiveData<String>("")
     }
+
+    val keywordsUI: MutableLiveData<List<CategoryKeywordUI>> by lazy {
+        MutableLiveData<List<CategoryKeywordUI>>()
+    }
+
+    private var searchDebounceJob: Job? = null
 
     init {
         if (initialCategoryUI == null) {
@@ -33,21 +46,44 @@ class CategoryEditViewModel(
     }
 
     fun onNameChange(name: String) {
-        categoryUI.postValue(
-            categoryUI.value?.copy(name = name)
-        )
+        categoryUI.value?.let { category ->
+            categoryUI.postValue(
+                editCategoryUseCases.changeName(category, name)
+            )
+        }
+    }
+
+    fun onRemoveKeyword(keyword: CategoryKeywordUI) {
+        categoryUI.value?.let { category ->
+            categoryUI.postValue(
+                editCategoryUseCases.removeKeyword(category, keyword)
+            )
+        }
     }
 
     fun onSearchKeywordChange(search: String) {
         currentSearch.postValue(search)
 
-        request({ searchCategoryKeywordsUseCase.execute(search) },
-            {
-                print(it)
-            },
-            {
-                print(it)
-            })
+        searchDebounceJob?.cancel()
+        searchDebounceJob = viewModelScope.launch {
+            delay(500)
+
+            request({ searchCategoryKeywordsUseCase.execute(search) },
+                {
+                    keywordsUI.postValue(it)
+                },
+                {
+                    print(it)
+                })
+        }
+    }
+
+    fun onAddKeyword(keyword: CategoryKeywordUI) {
+        categoryUI.value?.let { category ->
+            categoryUI.postValue(
+                editCategoryUseCases.addKeyword(category, keyword)
+            )
+        }
     }
 
 }

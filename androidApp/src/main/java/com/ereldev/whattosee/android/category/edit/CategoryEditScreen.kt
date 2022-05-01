@@ -3,6 +3,9 @@ package com.ereldev.whattosee.android.category.edit
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -19,12 +22,14 @@ import com.ereldev.whattosee.android.component.MainTopAppBar
 import com.ereldev.whattosee.android.component.TextTitle2
 import com.ereldev.whattosee.android.component.ValidIconButton
 import com.ereldev.whattosee.shared.category.factory.CategoryFactory
+import com.ereldev.whattosee.shared.category.model.CategoryKeywordUI
 import com.ereldev.whattosee.shared.category.model.CategoryUI
 import org.koin.androidx.compose.viewModel
 import org.koin.core.parameter.parametersOf
 
 const val CATEGORY_EDIT_SCREEN = "category_edit_screen"
 
+@ExperimentalMaterialApi
 @Composable
 fun CategoryEditScreenVM(
     initialCategoryUI: CategoryUI?,
@@ -34,27 +39,35 @@ fun CategoryEditScreenVM(
 
     val categoryUI by viewModel.categoryUI.observeAsState()
     val currentSearch by viewModel.currentSearch.observeAsState("")
+    val keywordsUI by viewModel.keywordsUI.observeAsState(listOf())
 
     categoryUI?.let {
         CategoryEditScreen(
             categoryUI = it,
             currentSearch = currentSearch,
+            keywordsUI = keywordsUI,
             onBackPressed = { onBackPressed() },
             onValidClick = { viewModel.onValidClick() },
             onNameChange = { name -> viewModel.onNameChange(name) },
-            onSearchKeywordChange = { search -> viewModel.onSearchKeywordChange(search) }
+            onRemoveKeyword = { keyword -> viewModel.onRemoveKeyword(keyword) },
+            onSearchKeywordChange = { search -> viewModel.onSearchKeywordChange(search) },
+            onAddKeyword = { keyword -> viewModel.onAddKeyword(keyword) }
         )
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun CategoryEditScreen(
     categoryUI: CategoryUI,
     currentSearch: String,
+    keywordsUI: List<CategoryKeywordUI>,
     onBackPressed: () -> Unit,
     onValidClick: () -> Unit,
     onNameChange: (name: String) -> Unit,
-    onSearchKeywordChange: (search: String) -> Unit
+    onRemoveKeyword: (CategoryKeywordUI) -> Unit,
+    onSearchKeywordChange: (search: String) -> Unit,
+    onAddKeyword: (CategoryKeywordUI) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -82,7 +95,8 @@ fun CategoryEditScreen(
 
             KeywordsList(
                 keywords = categoryUI.keywords,
-                modifier = Modifier.padding(bottom = 5.dp)
+                modifier = Modifier.padding(bottom = 5.dp),
+                onRemove = { onRemoveKeyword(it) }
             )
 
             OutlinedTextField(
@@ -95,20 +109,28 @@ fun CategoryEditScreen(
                     .fillMaxWidth()
             )
 
-            // Search result
+            LazyColumn {
+                items(keywordsUI) {
+                    CategoryKeywordListItem(it) { onAddKeyword(it) }
+                }
+            }
         }
     }
 }
 
+@ExperimentalMaterialApi
 @Preview(showSystemUi = true)
 @Composable
 fun CategoryEditScreenPreview() {
     CategoryEditScreen(
         categoryUI = CategoryFactory.getCategory(),
         currentSearch = "test search",
+        keywordsUI = CategoryFactory.getCategory().keywords,
         onBackPressed = {},
         onValidClick = {},
         onNameChange = {},
-        onSearchKeywordChange = {}
+        onRemoveKeyword = {},
+        onSearchKeywordChange = {},
+        onAddKeyword = {}
     )
 }
