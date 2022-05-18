@@ -4,15 +4,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,13 +37,13 @@ fun CategoryEditScreenVM(
 
     val categoryUI by viewModel.categoryUI.observeAsState()
     val currentSearch by viewModel.currentSearch.observeAsState("")
-    val keywordsUI by viewModel.keywordsUI.observeAsState(listOf())
+    val keywordsUIState by viewModel.keywordsUIState.observeAsState(CategoryKeywordsState.Loading)
 
     categoryUI?.let {
         CategoryEditScreen(
             categoryUI = it,
             currentSearch = currentSearch,
-            keywordsUI = keywordsUI,
+            keywordsUIState = keywordsUIState,
             onBackPressed = { onBackPressed() },
             onValidClick = { viewModel.onValidClick() },
             onNameChange = { name -> viewModel.onNameChange(name) },
@@ -61,7 +59,7 @@ fun CategoryEditScreenVM(
 fun CategoryEditScreen(
     categoryUI: CategoryUI,
     currentSearch: String,
-    keywordsUI: List<CategoryKeywordUI>,
+    keywordsUIState: CategoryKeywordsState,
     onBackPressed: () -> Unit,
     onValidClick: () -> Unit,
     onNameChange: (name: String) -> Unit,
@@ -109,9 +107,43 @@ fun CategoryEditScreen(
                     .fillMaxWidth()
             )
 
-            LazyColumn {
-                items(keywordsUI) {
-                    CategoryKeywordListItem(it) { onAddKeyword(it) }
+            when (keywordsUIState) {
+                is CategoryKeywordsState.Loading -> {}
+                is CategoryKeywordsState.Success -> {
+                    CategoryKeywordsList(keywordsUIState.keywordsUI) {
+                        onAddKeyword(it)
+                    }
+                }
+                is CategoryKeywordsState.Error -> {
+                    // TODO error with retry
+                }
+            }
+
+        }
+    }
+}
+
+@Composable
+fun CategoryKeywordsList(
+    keywordsUI: List<CategoryKeywordUI>,
+    onAddKeyword: (CategoryKeywordUI) -> Unit
+) {
+    if (keywordsUI.isEmpty()) {
+        Text(
+            text = stringResource(R.string.category_keywords_no_search_result),
+            modifier = Modifier
+                .padding(10.dp)
+        )
+    } else {
+        LazyColumn {
+            itemsIndexed(keywordsUI) { index, keywordUI ->
+                CategoryKeywordListItem(keywordUI) { onAddKeyword(keywordUI) }
+
+                if (index < keywordsUI.lastIndex) {
+                    Divider(
+                        color = Color.LightGray,
+                        thickness = 1.dp
+                    )
                 }
             }
         }
@@ -125,7 +157,28 @@ fun CategoryEditScreenPreview() {
     CategoryEditScreen(
         categoryUI = CategoryFactory.getCategory(),
         currentSearch = "test search",
-        keywordsUI = CategoryFactory.getCategory().keywords,
+        keywordsUIState = CategoryKeywordsState.Success(
+            CategoryFactory.getCategory().keywords
+        ),
+        onBackPressed = {},
+        onValidClick = {},
+        onNameChange = {},
+        onRemoveKeyword = {},
+        onSearchKeywordChange = {},
+        onAddKeyword = {}
+    )
+}
+
+@ExperimentalMaterialApi
+@Preview(showSystemUi = true)
+@Composable
+fun CategoryEditScreenEmptyListPreview() {
+    CategoryEditScreen(
+        categoryUI = CategoryFactory.getCategory(),
+        currentSearch = "test search",
+        keywordsUIState = CategoryKeywordsState.Success(
+            listOf()
+        ),
         onBackPressed = {},
         onValidClick = {},
         onNameChange = {},

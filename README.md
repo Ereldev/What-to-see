@@ -24,11 +24,11 @@ TODO: schematic
 
 - [] App navigation
 - [ ] Categories list
-  - [x] Empty state
+  - [X] Empty state
 - [ ] Create & edit category
-  - [x] Display search results
-  - [x] Search query after 500 ms
-  - [ ] Empty state for search
+  - [X] Display search results
+  - [X] Search query after 500 ms
+  - [X] Empty state for search
   - [ ] Error state with retry for search
   - [ ] Implement paging
   - [ ] Implement save / update

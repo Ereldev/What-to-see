@@ -25,8 +25,8 @@ class CategoryEditViewModel(
         MutableLiveData<String>("")
     }
 
-    val keywordsUI: MutableLiveData<List<CategoryKeywordUI>> by lazy {
-        MutableLiveData<List<CategoryKeywordUI>>()
+    val keywordsUIState: MutableLiveData<CategoryKeywordsState> by lazy {
+        MutableLiveData<CategoryKeywordsState>()
     }
 
     private var searchDebounceJob: Job? = null
@@ -68,12 +68,14 @@ class CategoryEditViewModel(
         searchDebounceJob = viewModelScope.launch {
             delay(500)
 
+            keywordsUIState.postValue(CategoryKeywordsState.Loading)
+
             request({ searchCategoryKeywordsUseCase.execute(search) },
                 {
-                    keywordsUI.postValue(it)
+                    keywordsUIState.postValue(CategoryKeywordsState.Success(it))
                 },
                 {
-                    print(it)
+                    keywordsUIState.postValue(CategoryKeywordsState.Error(it))
                 })
         }
     }
