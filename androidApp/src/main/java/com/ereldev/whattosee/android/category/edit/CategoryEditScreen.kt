@@ -1,8 +1,6 @@
 package com.ereldev.whattosee.android.category.edit
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
@@ -27,7 +25,6 @@ import org.koin.core.parameter.parametersOf
 
 const val CATEGORY_EDIT_SCREEN = "category_edit_screen"
 
-@ExperimentalMaterialApi
 @Composable
 fun CategoryEditScreenVM(
     initialCategoryUI: CategoryUI?,
@@ -49,12 +46,12 @@ fun CategoryEditScreenVM(
             onNameChange = { name -> viewModel.onNameChange(name) },
             onRemoveKeyword = { keyword -> viewModel.onRemoveKeyword(keyword) },
             onSearchKeywordChange = { search -> viewModel.onSearchKeywordChange(search) },
+            onRetrySearch = { viewModel.onRetrySearch() },
             onAddKeyword = { keyword -> viewModel.onAddKeyword(keyword) }
         )
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
 fun CategoryEditScreen(
     categoryUI: CategoryUI,
@@ -65,6 +62,7 @@ fun CategoryEditScreen(
     onNameChange: (name: String) -> Unit,
     onRemoveKeyword: (CategoryKeywordUI) -> Unit,
     onSearchKeywordChange: (search: String) -> Unit,
+    onRetrySearch: () -> Unit,
     onAddKeyword: (CategoryKeywordUI) -> Unit
 ) {
     Scaffold(
@@ -115,7 +113,14 @@ fun CategoryEditScreen(
                     }
                 }
                 is CategoryKeywordsState.Error -> {
-                    // TODO error with retry
+                    Row(
+                        horizontalArrangement= Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        TextButton(onClick = { onRetrySearch() }) {
+                            Text(text = stringResource(R.string.category_keywords_search_error))
+                        }
+                    }
                 }
             }
 
@@ -150,7 +155,6 @@ fun CategoryKeywordsList(
     }
 }
 
-@ExperimentalMaterialApi
 @Preview(showSystemUi = true)
 @Composable
 fun CategoryEditScreenPreview() {
@@ -165,11 +169,11 @@ fun CategoryEditScreenPreview() {
         onNameChange = {},
         onRemoveKeyword = {},
         onSearchKeywordChange = {},
+        onRetrySearch = {},
         onAddKeyword = {}
     )
 }
 
-@ExperimentalMaterialApi
 @Preview(showSystemUi = true)
 @Composable
 fun CategoryEditScreenEmptyListPreview() {
@@ -184,6 +188,26 @@ fun CategoryEditScreenEmptyListPreview() {
         onNameChange = {},
         onRemoveKeyword = {},
         onSearchKeywordChange = {},
+        onRetrySearch = {},
+        onAddKeyword = {}
+    )
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun CategoryEditScreenSearchErrorPreview() {
+    CategoryEditScreen(
+        categoryUI = CategoryFactory.getCategory(),
+        currentSearch = "test search",
+        keywordsUIState = CategoryKeywordsState.Error(
+            Throwable("")
+        ),
+        onBackPressed = {},
+        onValidClick = {},
+        onNameChange = {},
+        onRemoveKeyword = {},
+        onSearchKeywordChange = {},
+        onRetrySearch = {},
         onAddKeyword = {}
     )
 }

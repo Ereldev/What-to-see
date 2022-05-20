@@ -80,6 +80,12 @@ class CategoryEditViewModel(
         }
     }
 
+    fun onRetrySearch() {
+        currentSearch.value?.let {
+            onSearchKeywordChange(it)
+        }
+    }
+
     fun onAddKeyword(keyword: CategoryKeywordUI) {
         categoryUI.value?.let { category ->
             categoryUI.postValue(

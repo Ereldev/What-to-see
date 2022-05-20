@@ -29,7 +29,7 @@ TODO: schematic
   - [X] Display search results
   - [X] Search query after 500 ms
   - [X] Empty state for search
-  - [ ] Error state with retry for search
+  - [X] Error state with retry for search
   - [ ] Implement paging
   - [ ] Implement save / update
 - [ ] Movies & Shows list for a category
