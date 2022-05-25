@@ -2,8 +2,8 @@ package com.ereldev.whattosee.android.category.list
 
 import androidx.lifecycle.MutableLiveData
 import com.ereldev.whattosee.android.common.AbstractViewModel
-import com.ereldev.whattosee.shared.category.usecase.GetCategoriesUseCase
 import com.ereldev.whattosee.shared.category.model.CategoryUI
+import com.ereldev.whattosee.shared.category.usecase.GetCategoriesUseCase
 
 class CategoriesViewModel(
     private val getCategoriesUseCase: GetCategoriesUseCase
@@ -13,7 +13,7 @@ class CategoriesViewModel(
         MutableLiveData<List<CategoryUI>>()
     }
 
-    init {
+    fun loadCategories() {
         request({ getCategoriesUseCase.execute() },
             {
                 categories.postValue(it)

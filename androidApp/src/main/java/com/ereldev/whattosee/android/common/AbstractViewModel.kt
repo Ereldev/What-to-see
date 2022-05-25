@@ -16,9 +16,9 @@ abstract class AbstractViewModel: ViewModel() {
             try {
                 val result = request.invoke()
 
-                viewModelScope.launch(Dispatchers.IO) { onSuccess(result) }
+                viewModelScope.launch(Dispatchers.Main) { onSuccess(result) }
             } catch (t: Throwable) {
-                viewModelScope.launch(Dispatchers.IO) { onError(t)  }
+                viewModelScope.launch(Dispatchers.Main) { onError(t)  }
             }
         }
     }

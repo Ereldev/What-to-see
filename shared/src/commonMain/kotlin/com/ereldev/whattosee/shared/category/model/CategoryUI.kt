@@ -1,8 +1,9 @@
 package com.ereldev.whattosee.shared.category.model
 
 data class CategoryUI(
+    val id: Long?,
     val name: String,
-    val keywords: List<CategoryKeywordUI>
+    var keywords: List<CategoryKeywordUI>
 )
 
 data class CategoryKeywordUI(

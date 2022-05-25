@@ -8,6 +8,7 @@ class CategoryFactory {
     companion object {
 
         fun getCategory() = CategoryUI(
+            null,
             "Category name",
             listOf(
                 CategoryKeywordUI(1, "Keyword name 1"),

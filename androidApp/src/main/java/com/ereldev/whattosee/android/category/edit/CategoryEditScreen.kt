@@ -28,9 +28,12 @@ const val CATEGORY_EDIT_SCREEN = "category_edit_screen"
 @Composable
 fun CategoryEditScreenVM(
     initialCategoryUI: CategoryUI?,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    onCategorySaved: () -> Unit
 ) {
-    val viewModel by viewModel<CategoryEditViewModel> { parametersOf(initialCategoryUI) }
+    val viewModel by viewModel<CategoryEditViewModel> {
+        parametersOf(initialCategoryUI, onCategorySaved)
+    }
 
     val categoryUI by viewModel.categoryUI.observeAsState()
     val currentSearch by viewModel.currentSearch.observeAsState("")

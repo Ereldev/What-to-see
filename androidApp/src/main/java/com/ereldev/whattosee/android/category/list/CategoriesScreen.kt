@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.stringResource
@@ -29,6 +30,11 @@ fun CategoriesScreenVM(
     val viewModel by viewModel<CategoriesViewModel>()
 
     val categories by viewModel.categories.observeAsState(listOf())
+
+    // Force refresh screen after editing a category
+    LaunchedEffect(Unit) {
+        viewModel.loadCategories()
+    }
 
     CategoriesScreen(
         categories = categories,

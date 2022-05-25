@@ -1,11 +1,13 @@
 package com.ereldev.whattosee.android.category.edit
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ereldev.whattosee.android.common.AbstractViewModel
 import com.ereldev.whattosee.shared.category.model.CategoryKeywordUI
 import com.ereldev.whattosee.shared.category.model.CategoryUI
 import com.ereldev.whattosee.shared.category.usecase.EditCategoryUseCases
+import com.ereldev.whattosee.shared.category.usecase.InsertOrUpdateCategoryUse
 import com.ereldev.whattosee.shared.category.usecase.SearchCategoryKeywordsUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -13,8 +15,10 @@ import kotlinx.coroutines.launch
 
 class CategoryEditViewModel(
     initialCategoryUI: CategoryUI?,
+    private val onCategorySaved: () -> Unit,
     private val editCategoryUseCases: EditCategoryUseCases,
-    private val searchCategoryKeywordsUseCase: SearchCategoryKeywordsUseCase
+    private val searchCategoryKeywordsUseCase: SearchCategoryKeywordsUseCase,
+    private val insertOrUpdateCategoryUse: InsertOrUpdateCategoryUse
 ): AbstractViewModel() {
 
     val categoryUI: MutableLiveData<CategoryUI> by lazy {
@@ -34,7 +38,7 @@ class CategoryEditViewModel(
     init {
         if (initialCategoryUI == null) {
             categoryUI.postValue(
-                CategoryUI("", listOf())
+                CategoryUI(null, "", listOf())
             )
         } else {
             categoryUI.postValue(initialCategoryUI)
@@ -42,7 +46,15 @@ class CategoryEditViewModel(
     }
 
     fun onValidClick() {
-
+        categoryUI.value?.let {
+            request({ insertOrUpdateCategoryUse.execute(it) },
+                {
+                    onCategorySaved()
+                },
+                {
+                    Log.e("CategoryEditViewModel", it.toString())
+                })
+        }
     }
 
     fun onNameChange(name: String) {

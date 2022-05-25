@@ -56,7 +56,11 @@ private fun CreateEditCategoryScreen(navController: NavHostController) {
     ).let {
         CategoryEditScreenVM(it) { onBackPressed(navController) }
     }*/
-    CategoryEditScreenVM(null) { onBackPressed(navController) }
+    CategoryEditScreenVM(
+        initialCategoryUI = null,
+        onBackPressed = { onBackPressed(navController) },
+        onCategorySaved = { navController.navigateUp() }
+    )
 }
 
 private fun onEditCategoryClick(

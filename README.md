@@ -25,13 +25,14 @@ TODO: schematic
 - [] App navigation
 - [ ] Categories list
   - [X] Empty state
+  - [ ] Remove / Edit category => https://proandroiddev.com/swipe-to-reveal-in-jetpack-compose-6ffa8928a4c2
 - [ ] Create & edit category
   - [X] Display search results
   - [X] Search query after 500 ms
   - [X] Empty state for search
   - [X] Error state with retry for search
-  - [ ] Implement paging
-  - [ ] Implement save / update
+  - [ ] Implement keywords search paging
+  - [ ] Implement save / update (Add mappers in CategoryRepository)
 - [ ] Movies & Shows list for a category
   - [ ] Display results
   - [ ] Empty state

@@ -1,6 +1,6 @@
 package com.ereldev.whattosee.shared.category
 
-import com.ereldev.whattosee.db.Category
+import com.ereldev.whattosee.db.CategoryKeyword
 import com.ereldev.whattosee.db.WHat2SeeDatabase
 import com.ereldev.whattosee.shared.category.mapper.CategoryToCategoryUIMapper
 import com.ereldev.whattosee.shared.category.mapper.KeywordToToCategoryKeywordUIMapper
@@ -19,12 +19,37 @@ class CategoryRepository(
         database.categoryQueries
             .selectAll()
             .executeAsList()
-            .map { categoryToCategoryUIMapper.from(it) }
+            .map { category ->
+                val keywords = database.categoryQueries
+                    .selectKeywords(category.id)
+                    .executeAsList()
+
+                categoryToCategoryUIMapper.from(category).apply {
+                    this.keywords = keywords.map { keyword ->
+                        CategoryKeywordUI(keyword.id.toInt(), keyword.name)
+                    }
+                }
+            }
     }
 
-    suspend fun create(category: Category) = coroutineScope {
-        database.categoryQueries
-            .insert(category)
+    suspend fun insertOrUpdate(categoryUI: CategoryUI) = coroutineScope {
+        database.categoryQueries.transaction {
+            database.categoryQueries
+                .insertOrUpdate(categoryToCategoryUIMapper.to(categoryUI))
+
+            val lastInsertRowId = database.categoryQueries.lastInsertRowId().executeAsOne()
+
+            categoryUI.keywords.forEach {
+                database.categoryQueries
+                    .insertOrUpdateKeyword(
+                        CategoryKeyword(
+                            it.id.toLong(),
+                            it.name,
+                            categoryUI.id ?: lastInsertRowId
+                        )
+                    )
+            }
+        }
     }
 
     suspend fun searchKeywords(search: String): List<CategoryKeywordUI> =
